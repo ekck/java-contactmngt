@@ -79,45 +79,42 @@ public class Main {
                 } else {
                     id++;
                     Message newMessage = new Message(text, name, id);
-                    for (Contact c : contacts){
+                    for (Contact c : contacts) {
                         if (c.getName().equals(name)) {
                             ArrayList<Message> newMessages = c.getMessages();
                             newMessages.add(newMessage);
-                            Contact currentContact = c;
-                            currentContact.setMessages(newMessages);
-                            contacts.remove(c);
-                            contacts.add(currentContact);
+                            c.setMessages(newMessages);
                         }
-                }
+                    }
 
+                }
+            } else {
+                System.out.println("There is no such contact");
             }
-             } else {
-            System.out.println("There is no such contact");
         }
-    }
         showInitialOptions();
 
-}
+    }
 
     private static void showAllMessages() {
         ArrayList<Message> allMessages = new ArrayList<>();
-        for (Contact c: contacts) {
+        for (Contact c : contacts) {
             allMessages.addAll(c.getMessages());
         }
-        if (allMessages.size()>0){
-            for (Message m: allMessages){
+        if (allMessages.size() > 0) {
+            for (Message m : allMessages) {
                 m.getDetails();
                 System.out.println("***********");
             }
-        }else {
+        } else {
             System.out.println("You don't have any message");
 
         }
         showInitialOptions();
     }
 
-    private static void manageContacts(){
-        System.out.println("Please select one:"+
+    private static void manageContacts() {
+        System.out.println("Please select one:" +
                 "\n\t1. Show all contacts" +
                 "\n\t2. Add a new contact" +
                 "\n\t3. Search for a contact" +
@@ -148,19 +145,19 @@ public class Main {
     private static void deleteContact() {
         System.out.println("Please enter the contact's name: ");
         String name = scanner.next();
-        if (name.equals("")){
+        if (name.equals("")) {
             System.out.println("Please enter the name");
             deleteContact();
-        }else {
+        } else {
             boolean doesExist = false;
 
-            for (Contact c: contacts){
-                if (c.getName().equals(name)){
+            for (Contact c : contacts) {
+                if (c.getName().equals(name)) {
                     doesExist = true;
                     contacts.remove(c);
                 }
             }
-            if (!doesExist){
+            if (!doesExist) {
                 System.out.println("There is no such contact");
             }
         }
@@ -171,18 +168,18 @@ public class Main {
     private static void searchForContact() {
         System.out.println("Please enter the contact name:");
         String name = scanner.next();
-        if (name.equals("")){
+        if (name.equals("")) {
             System.out.println("Please enter the name");
             searchForContact();
         } else {
             boolean doesExist = false;
-            for (Contact c: contacts){
-                if (c.getName().equals(name)){
+            for (Contact c : contacts) {
+                if (c.getName().equals(name)) {
                     doesExist = true;
                     c.getDetails();
                 }
             }
-            if (!doesExist){
+            if (!doesExist) {
                 System.out.println("THere is no such contact in your phone");
             }
         }
@@ -217,11 +214,19 @@ public class Main {
             showInitialOptions();
         }
     }
+
     private static void showAllContacts() {
-        for (Contact c: contacts){
-            c.getDetails();
-            System.out.println("****************");
+        if (contacts.size() > 0) {
+
+            for (Contact c : contacts) {
+                c.getDetails();
+                System.out.println("****************");
+            }
+            showInitialOptions();
+        } else {
+            System.out.println("You dont have any contacts");
+            showInitialOptions();
         }
-        showInitialOptions();
     }
 }
+
